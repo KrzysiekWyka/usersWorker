@@ -11,9 +11,9 @@ export class UsersProcessor {
 
   constructor(private readonly usersService: UsersService) {}
 
-  @Process('transcode')
-  transcode(job: Job<UserEntity>) {
-    this.logger.setContext(this.transcode.name);
+  @Process()
+  consume(job: Job<UserEntity>) {
+    this.logger.setContext(this.consume.name);
 
     this.logger.debug(`Job: ${job.id} Payload: ${JSON.stringify(job.data)}`);
 
