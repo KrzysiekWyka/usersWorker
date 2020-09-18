@@ -5,17 +5,22 @@ import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersProcessor } from './users.processor';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     TypegooseModule.forFeature([UserEntity]),
     // TODO: Read config values!!
-    BullModule.registerQueue({
+    BullModule.registerQueueAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       name: 'users',
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+      useFactory: (config: ConfigService) => ({
+        redis: {
+          host: config.get<string>('REDIS_HOST'),
+          port: config.get<number>('REDIS_PORT'),
+        },
+      }),
     }),
   ],
   providers: [UsersService, UsersProcessor],
