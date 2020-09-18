@@ -7,7 +7,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     // TODO: Read connection string from condif file
-    TypegooseModule.forRoot('mongodb://localhost:27017/nest', {
+    TypegooseModule.forRoot('mongodb://localhost:27017/users-worker', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
