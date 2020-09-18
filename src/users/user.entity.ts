@@ -1,12 +1,16 @@
-import { prop } from '@typegoose/typegoose';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class UserEntity {
-  @prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ nullable: false })
   name!: string;
 
-  @prop({ required: true })
+  @Column({ nullable: false })
   surname!: string;
 
-  @prop({ required: true })
+  @Column({ nullable: false })
   address!: string;
 }
