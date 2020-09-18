@@ -1,10 +1,18 @@
 import { Module } from '@nestjs/common';
+import { TypegooseModule } from 'nestjs-typegoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [UsersModule],
+  imports: [
+    // TODO: Read connection string from condif file
+    TypegooseModule.forRoot('mongodb://localhost:27017/nest', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
