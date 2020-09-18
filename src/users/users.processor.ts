@@ -12,7 +12,7 @@ export class UsersProcessor {
   constructor(private readonly usersService: UsersService) {}
 
   @Process('transcode')
-  async transcode(job: Job<UserEntity>) {
+  transcode(job: Job<UserEntity>) {
     this.logger.setContext(this.transcode.name);
 
     this.logger.debug(`Job: ${job.id} Payload: ${JSON.stringify(job.data)}`);
