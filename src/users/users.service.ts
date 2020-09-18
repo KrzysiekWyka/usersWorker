@@ -9,6 +9,7 @@ export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
   constructor(
+    // TODO: In more complicated app using repository app will be great, but in this scenario I prefer to use model directly in service
     @InjectModel(UserEntity)
     private readonly usersModel: ReturnModelType<typeof UserEntity>,
   ) {}
