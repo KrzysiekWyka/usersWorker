@@ -6,7 +6,7 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    // TODO: Read connection string from condif file
+    // TODO: Read connection string from config file
     TypegooseModule.forRoot('mongodb://localhost:27017/users-worker', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
