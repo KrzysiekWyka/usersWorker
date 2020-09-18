@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
-import { TypegooseModule } from 'nestjs-typegoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
 import { UsersController } from './users.controller';
@@ -9,8 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypegooseModule.forFeature([UserEntity]),
-    // TODO: Read config values!!
+    TypeOrmModule.forFeature([UserEntity]),
     BullModule.registerQueueAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
