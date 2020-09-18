@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectModel } from 'nestjs-typegoose';
 import { UserEntity } from './user.entity';
-import { ReturnModelType } from '@typegoose/typegoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -10,15 +10,15 @@ export class UsersService {
 
   constructor(
     // TODO: In more complicated app using repository app will be great, but in this scenario I prefer to use model directly in service
-    @InjectModel(UserEntity)
-    private readonly usersModel: ReturnModelType<typeof UserEntity>,
+    @InjectRepository(UserEntity)
+    private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async consumeUser(modelToAdd: UserEntity) {
+  async consumeUser(modelToAdd: Omit<UserEntity, 'id'>) {
     this.logger.setContext(this.consumeUser.name);
 
     try {
-      await this.usersModel.create(modelToAdd);
+      await this.usersRepository.create(modelToAdd);
 
       this.logger.debug(`User created ${JSON.stringify(modelToAdd)}`);
     } catch (e) {
@@ -27,10 +27,6 @@ export class UsersService {
   }
 
   getAllUsers() {
-    return this.usersModel
-      .find()
-      .sort({ name: -1, surname: -1 })
-      .lean()
-      .exec();
+    return this.usersRepository.find();
   }
 }
